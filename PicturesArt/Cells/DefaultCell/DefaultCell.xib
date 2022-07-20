@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DefaultCell" id="gTV-IL-0wX" customClass="DefaultCell" customModule="PicturesArt" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="157" height="243"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="157" height="243"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RLa-gM-23g">
+                        <rect key="frame" x="0.0" y="0.0" width="157" height="243"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KIk-BD-QCE">
+                                <rect key="frame" x="0.0" y="213" width="157" height="30"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1080 x 1920" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="75o-Sv-2xg">
+                                        <rect key="frame" x="41.5" y="8" width="74.5" height="14.5"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                        <color key="textColor" systemColor="tintColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                <constraints>
+                                    <constraint firstItem="75o-Sv-2xg" firstAttribute="centerX" secondItem="KIk-BD-QCE" secondAttribute="centerX" id="Rk1-Ho-YXG"/>
+                                    <constraint firstItem="75o-Sv-2xg" firstAttribute="centerY" secondItem="KIk-BD-QCE" secondAttribute="centerY" id="oxb-Pi-Zf5"/>
+                                    <constraint firstAttribute="height" constant="30" id="wmf-ZW-Umi"/>
+                                </constraints>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="QWi-am-MeF">
+                                <rect key="frame" x="0.0" y="8" width="157" height="197"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" systemColor="systemRedColor"/>
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="70" weight="light"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="QWi-am-MeF" firstAttribute="top" secondItem="RLa-gM-23g" secondAttribute="top" id="5Tl-YH-soN"/>
+                            <constraint firstAttribute="trailing" secondItem="KIk-BD-QCE" secondAttribute="trailing" id="Azm-LL-xcE"/>
+                            <constraint firstItem="QWi-am-MeF" firstAttribute="leading" secondItem="RLa-gM-23g" secondAttribute="leading" id="F9E-UO-flv"/>
+                            <constraint firstItem="KIk-BD-QCE" firstAttribute="top" secondItem="QWi-am-MeF" secondAttribute="bottom" id="KoC-mv-q8X"/>
+                            <constraint firstAttribute="trailing" secondItem="QWi-am-MeF" secondAttribute="trailing" id="emV-oa-git"/>
+                            <constraint firstItem="KIk-BD-QCE" firstAttribute="leading" secondItem="RLa-gM-23g" secondAttribute="leading" id="nki-1G-LOb"/>
+                            <constraint firstAttribute="bottom" secondItem="KIk-BD-QCE" secondAttribute="bottom" id="vlp-sk-mn7"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="12"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" systemColor="systemGray4Color"/>
+            <constraints>
+                <constraint firstItem="RLa-gM-23g" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="A2d-lT-9JD"/>
+                <constraint firstAttribute="trailing" secondItem="RLa-gM-23g" secondAttribute="trailing" id="EQN-gv-yUG"/>
+                <constraint firstAttribute="bottom" secondItem="RLa-gM-23g" secondAttribute="bottom" id="Kvb-bh-zYs"/>
+                <constraint firstItem="RLa-gM-23g" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="oAT-ME-hJ0"/>
+            </constraints>
+            <size key="customSize" width="157" height="243"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                    <integer key="value" value="12"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <point key="canvasLocation" x="215.21739130434784" y="142.96875"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="plus" catalog="system" width="128" height="113"/>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
