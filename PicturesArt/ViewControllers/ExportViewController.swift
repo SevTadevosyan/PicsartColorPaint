@@ -21,7 +21,9 @@ class ExportViewController: UIViewController {
                                             in: .userDomainMask)
         return path.first
     }
+    
     func saveJpg(_ image: UIImage) {
+        
         if let jpgData = image.jpegData(compressionQuality: 1.0),
             let path = documentDirectoryPath()?.appendingPathComponent("exampleJpg.jpg") {
             try? jpgData.write(to: path)
@@ -31,8 +33,6 @@ class ExportViewController: UIViewController {
         let imageData = self.imageView.image!.pngData()
         guard let compresedImage = UIImage(data: imageData!) else { return }
         UIImageWriteToSavedPhotosAlbum(compresedImage, self, #selector(image(path:didFinishSavingWithError:contextInfo:)), nil)
-
-        
     }
     @objc private func image(path: String, didFinishSavingWithError error: NSError?, contextInfo: UnsafeMutableRawPointer?) {
         if ((error) != nil) {

@@ -7,14 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D269615289FEBAB00C39A4E /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D269614289FEBAB00C39A4E /* CoreDataHelper.swift */; };
 		0D62F4AE287EEF3B0019AE77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D62F4AD287EEF3B0019AE77 /* AppDelegate.swift */; };
 		0D62F4B0287EEF3B0019AE77 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D62F4AF287EEF3B0019AE77 /* SceneDelegate.swift */; };
 		0D62F4B2287EEF3B0019AE77 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D62F4B1287EEF3B0019AE77 /* LaunchViewController.swift */; };
 		0D62F4B5287EEF3B0019AE77 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D62F4B3287EEF3B0019AE77 /* Main.storyboard */; };
-		0D62F4B8287EEF3B0019AE77 /* PicturesArt.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0D62F4B6287EEF3B0019AE77 /* PicturesArt.xcdatamodeld */; };
+		0D62F4B8287EEF3B0019AE77 /* Drawings.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0D62F4B6287EEF3B0019AE77 /* Drawings.xcdatamodeld */; };
 		0D62F4BA287EEF3C0019AE77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D62F4B9287EEF3C0019AE77 /* Assets.xcassets */; };
 		0D62F4BD287EEF3C0019AE77 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D62F4BB287EEF3C0019AE77 /* LaunchScreen.storyboard */; };
 		0D74982228841D2600970446 /* ItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D74982128841D2600970446 /* ItemsViewModel.swift */; };
+		0D976110289C008600789830 /* Entity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D97610E289C008600789830 /* Entity+CoreDataClass.swift */; };
+		0D976111289C008600789830 /* Entity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D97610F289C008600789830 /* Entity+CoreDataProperties.swift */; };
 		0D9D4EFC288275E500FE8A03 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9D4EFB288275E500FE8A03 /* Extensions.swift */; };
 		0DA540C62885FB0900D73922 /* ColorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA540C52885FB0900D73922 /* ColorViewController.swift */; };
 		0DA96BB82885AA560036CB13 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA96BB72885AA560036CB13 /* SettingsViewController.swift */; };
@@ -32,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D269614289FEBAB00C39A4E /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
 		0D62F4AA287EEF3B0019AE77 /* PicturesArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PicturesArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D62F4AD287EEF3B0019AE77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0D62F4AF287EEF3B0019AE77 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -42,6 +46,8 @@
 		0D62F4BC287EEF3C0019AE77 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0D62F4BE287EEF3C0019AE77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0D74982128841D2600970446 /* ItemsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsViewModel.swift; sourceTree = "<group>"; };
+		0D97610E289C008600789830 /* Entity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		0D97610F289C008600789830 /* Entity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		0D9D4EFB288275E500FE8A03 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		0DA540C52885FB0900D73922 /* ColorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorViewController.swift; sourceTree = "<group>"; };
 		0DA96BB72885AA560036CB13 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -88,18 +94,45 @@
 		0D62F4AC287EEF3B0019AE77 /* PicturesArt */ = {
 			isa = PBXGroup;
 			children = (
-				0D62F4AD287EEF3B0019AE77 /* AppDelegate.swift */,
-				0D62F4AF287EEF3B0019AE77 /* SceneDelegate.swift */,
+				0D909727289AD6340001DB5E /* MainFiles */,
 				0DA96BBE2885F0190036CB13 /* Cells */,
 				0DA96BBF2885F0250036CB13 /* ViewControllers */,
 				0DA96BC02885F0400036CB13 /* Support */,
-				0D62F4B3287EEF3B0019AE77 /* Main.storyboard */,
-				0D62F4B9287EEF3C0019AE77 /* Assets.xcassets */,
-				0D62F4BB287EEF3C0019AE77 /* LaunchScreen.storyboard */,
-				0D62F4BE287EEF3C0019AE77 /* Info.plist */,
-				0D62F4B6287EEF3B0019AE77 /* PicturesArt.xcdatamodeld */,
+				0D909726289AD61D0001DB5E /* Model */,
+				0D909728289AD6460001DB5E /* InterfaceBuilders */,
 			);
 			path = PicturesArt;
+			sourceTree = "<group>";
+		};
+		0D909726289AD61D0001DB5E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0D62F4B6287EEF3B0019AE77 /* Drawings.xcdatamodeld */,
+				0D97610E289C008600789830 /* Entity+CoreDataClass.swift */,
+				0D97610F289C008600789830 /* Entity+CoreDataProperties.swift */,
+				0D269614289FEBAB00C39A4E /* CoreDataHelper.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0D909727289AD6340001DB5E /* MainFiles */ = {
+			isa = PBXGroup;
+			children = (
+				0D62F4AD287EEF3B0019AE77 /* AppDelegate.swift */,
+				0D62F4AF287EEF3B0019AE77 /* SceneDelegate.swift */,
+				0D62F4B9287EEF3C0019AE77 /* Assets.xcassets */,
+				0D62F4BE287EEF3C0019AE77 /* Info.plist */,
+			);
+			path = MainFiles;
+			sourceTree = "<group>";
+		};
+		0D909728289AD6460001DB5E /* InterfaceBuilders */ = {
+			isa = PBXGroup;
+			children = (
+				0D62F4B3287EEF3B0019AE77 /* Main.storyboard */,
+				0D62F4BB287EEF3C0019AE77 /* LaunchScreen.storyboard */,
+			);
+			path = InterfaceBuilders;
 			sourceTree = "<group>";
 		};
 		0DA96BBD2885F00A0036CB13 /* ColorCell */ = {
@@ -244,8 +277,11 @@
 				0DDBAF16287F0C6900EA70C2 /* ItemsViewController.swift in Sources */,
 				0DDBAF18287F0CBF00EA70C2 /* EditViewController.swift in Sources */,
 				0D74982228841D2600970446 /* ItemsViewModel.swift in Sources */,
+				0D976110289C008600789830 /* Entity+CoreDataClass.swift in Sources */,
 				0D62F4AE287EEF3B0019AE77 /* AppDelegate.swift in Sources */,
-				0D62F4B8287EEF3B0019AE77 /* PicturesArt.xcdatamodeld in Sources */,
+				0D269615289FEBAB00C39A4E /* CoreDataHelper.swift in Sources */,
+				0D976111289C008600789830 /* Entity+CoreDataProperties.swift in Sources */,
+				0D62F4B8287EEF3B0019AE77 /* Drawings.xcdatamodeld in Sources */,
 				0DE909E628833ECC008268CD /* Canvas.swift in Sources */,
 				0DA96BBB2885EF9F0036CB13 /* ColorCell.swift in Sources */,
 				0D9D4EFC288275E500FE8A03 /* Extensions.swift in Sources */,
@@ -401,7 +437,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = SRS4ZYX9NV;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = PicturesArt/Info.plist;
+				INFOPLIST_FILE = PicturesArt/MainFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -429,7 +465,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = SRS4ZYX9NV;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = PicturesArt/Info.plist;
+				INFOPLIST_FILE = PicturesArt/MainFiles/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -472,13 +508,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		0D62F4B6287EEF3B0019AE77 /* PicturesArt.xcdatamodeld */ = {
+		0D62F4B6287EEF3B0019AE77 /* Drawings.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				0D62F4B7287EEF3B0019AE77 /* PicturesArt.xcdatamodel */,
 			);
 			currentVersion = 0D62F4B7287EEF3B0019AE77 /* PicturesArt.xcdatamodel */;
-			path = PicturesArt.xcdatamodeld;
+			path = Drawings.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

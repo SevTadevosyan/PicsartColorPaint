@@ -9,27 +9,74 @@ import UIKit
 
 class EditViewController: UIViewController {
     
-    @IBOutlet weak var canvasView: Canvas!
+    @IBOutlet weak var canvasView: UIImageView!
     @IBOutlet weak var pencilToolButton: UIButton!
     @IBOutlet weak var eraserToolButton: UIButton!
     @IBOutlet weak var lineToolButton: UIButton!
     @IBOutlet weak var undoButton: UIButton!
     @IBOutlet weak var redoButton: UIButton!
+    @IBOutlet weak var importedImage: UIImageView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var shadowView: UIView!
     
-    var index: Int?
+    var lines = [Line]()
+    var redoLines = [Line]()
     var buttons = [UIButton]()
+    var timer: Timer?
+    var index: Int?
+    var img = UIImage()
+    var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configure()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        activityIndicator.isHidden = false
+        shadowView.isHidden = false
+        activityIndicator.startAnimating()
+        timer?.invalidate()
+        Timer.scheduledTimer(timeInterval: 0.5,
+                             target: self,
+                             selector: #selector(stopIndicatorAnimation),
+                             userInfo: nil,
+                             repeats: false)
+        PenConfiguration.shared.penColor = UIColor.black.cgColor
+    }
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if let imageData = canvasView.image?.pngData() {
+            ItemsViewModel.shared.imageDatas[ItemsViewModel.shared.currentImageIndex].image = imageData
+            do {
+                try CoreDataHelper.shared.context.save()
+            } catch {
+                
+            }
+        }
+        PenConfiguration.shared.type = .pen
+        if canvasView.image != nil {
+            ItemsViewModel.shared.images[ItemsViewModel.shared.images.count - 1] = canvasView.image!
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
     }
     
+    @objc func stopIndicatorAnimation() {
+        activityIndicator.stopAnimating()
+        activityIndicator.isHidden = true
+        shadowView.isHidden = true
+    }
+    
     func configure() {
-        canvasView.delegate = self
         canvasView.gestureRecognizers![0].delegate = self
         canvasView.backgroundColor = .white
         pencilToolButton.isSelected = true
@@ -44,16 +91,17 @@ class EditViewController: UIViewController {
                 b.isSelected = false
             }
         }
+        button.isSelected = true
     }
     
     func configureUndoRedoButtonStates() {
         
-        if canvasView.lines.count == 0 {
+        if lines.count == 0 {
             undoButton.isEnabled = false
         } else {
             undoButton.isEnabled = true
         }
-        if canvasView.redoLines.count == 0 {
+        if redoLines.count == 0 {
             redoButton.isEnabled = false
         } else {
             redoButton.isEnabled = true
@@ -61,24 +109,26 @@ class EditViewController: UIViewController {
     }
     
     @IBAction func exit(_ sender: UIButton) {
-        if ItemsViewModel.shared.images.count == ItemsViewModel.shared.cellsCount - 1 {
-            ItemsViewModel.shared.images[index! - 1] = canvasView.asImage()
-        }
         self.dismiss(animated: true)
+        
     }
     
     @IBAction func undoChange(_ sender: UIButton) {
-        canvasView.undo()
+        undo()
         configureUndoRedoButtonStates()
     }
     
     @IBAction func redoChange(_ sender: UIButton) {
-        canvasView.redo()
+        redo()
         configureUndoRedoButtonStates()
+
     }
     
     @IBAction func addImage(_ sender: UIButton) {
-        
+        let vc = UIImagePickerController()
+        vc.delegate = self
+        vc.allowsEditing = true
+        present(vc, animated: true)
     }
     
     @IBAction func saveImageIntoGallery(_ sender: UIButton) {
@@ -87,13 +137,15 @@ class EditViewController: UIViewController {
         vc.modalTransitionStyle = .coverVertical
         self.present(vc, animated: true) {
             DispatchQueue.main.async {
-                vc.imageView.image = self.canvasView.asImage()
+                vc.imageView.image = self.canvasView.image!
             }
         }
     }
     
     @IBAction func chooseColor(_ sender: UIButton) {
-        self.show("ColorViewController", transitionStyle: .coverVertical, presentationStyle: .formSheet)
+        self.show(name: "ColorViewController",
+                  transitionStyle: .coverVertical,
+                  presentationStyle: .formSheet)
     }
     
     @IBAction func usePencil(_ sender: UIButton) {
@@ -102,9 +154,10 @@ class EditViewController: UIViewController {
         PenConfiguration.shared.color = PenConfiguration.shared.penColor
     }
     
-    @IBAction func drawGradient(_ sender: UIButton) {
-        deselectExceptFor(button: lineToolButton)
+    @IBAction func useDirectLine(_ sender: UIButton) {
         PenConfiguration.shared.type = .line
+        deselectExceptFor(button: lineToolButton)
+        PenConfiguration.shared.color = PenConfiguration.shared.penColor
     }
     
     @IBAction func useEraser(_ sender: UIButton) {
@@ -114,11 +167,14 @@ class EditViewController: UIViewController {
     }
     
     @IBAction func showSettings(_ sender: UILongPressGestureRecognizer) {
-        self.show("SettingsViewController", transitionStyle: .coverVertical, presentationStyle: .formSheet)
+        self.show(name: "SettingsViewController",
+                  transitionStyle: .coverVertical,
+                  presentationStyle: .formSheet)
     }
     
     @IBAction func zoomEditingView(_ sender: UIPinchGestureRecognizer) {
-        canvasView.transform = canvasView.transform.scaledBy(x: sender.scale, y: sender.scale)
+        canvasView.transform = canvasView.transform.scaledBy(x: sender.scale,
+                                                             y: sender.scale)
         sender.scale = 1
     }
     
@@ -132,18 +188,21 @@ class EditViewController: UIViewController {
     }
 }
 
-extension EditViewController: CanvasDelegate {
-    func didTapped() {
-        if eraserToolButton.isSelected == true {
-            PenConfiguration.shared.color = UIColor.white.cgColor
-        }
-        undoButton.isEnabled = true
-    }
-}
-
 extension EditViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
+}
+
+extension EditViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
+            importedImage.image = image
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
     
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
 }

@@ -10,8 +10,5 @@ import UIKit
 class CustomCell: UICollectionViewCell {
 
     @IBOutlet weak var imageView: UIImageView!
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-
+    
 }

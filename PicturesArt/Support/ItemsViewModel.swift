@@ -10,11 +10,19 @@ import UIKit
 class ItemsViewModel {
     
     static let shared = ItemsViewModel()
-    var currentImage = UIImage()
     private init() {}
+    
     var images: [UIImage] = []
-    var views: [Canvas] = []
-    var cellsCount = 1
+    var imageDatas: [Image] = []
+    var currentImageIndex = 0
+    
+    func convertToUIImage() {
+        images = []
+        for i in 0..<imageDatas.count {
+            images.append(UIImage())
+            images[i] = UIImage(data: imageDatas[i].image!)!
+        }
+    }
 }
 
 class PenConfiguration {
@@ -34,6 +42,7 @@ struct Line {
     var points = [CGPoint]()
     var width = PenConfiguration.shared.width
     var opacity = PenConfiguration.shared.opacity
+    var type = PenConfiguration.shared.type
 }
 
 enum DrawingTypes {

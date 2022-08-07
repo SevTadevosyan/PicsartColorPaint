@@ -12,6 +12,7 @@ class ItemsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.contentInset = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
@@ -21,17 +22,15 @@ class ItemsViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        collectionView.reloadData()
+        fetchImages()
     }
     
-    func openEditViewController(at index: Int) {
-        guard let drawingViewController = storyboard?.instantiateViewController(identifier: "EditViewController") as? EditViewController else { return }
-        drawingViewController.modalTransitionStyle = .coverVertical
-        drawingViewController.modalPresentationStyle = .fullScreen
-        drawingViewController.index = index
-        
-        self.present(drawingViewController, animated: true) {
-//            drawingViewController.canvasView = ItemsViewModel.shared.views[index - 1]
+    
+    func fetchImages() {
+        CoreDataHelper.shared.fetchImage()
+        ItemsViewModel.shared.convertToUIImage()
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
         }
     }
     
@@ -42,7 +41,7 @@ class ItemsViewController: UIViewController {
 
 extension ItemsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return ItemsViewModel.shared.cellsCount
+        return ItemsViewModel.shared.images.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -73,12 +72,14 @@ extension ItemsViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item == 0 {
-            ItemsViewModel.shared.cellsCount += 1
+            
+            ItemsViewModel.shared.imageDatas.append(Image(context: CoreDataHelper.shared.context))
             ItemsViewModel.shared.images.append(UIImage())
-            ItemsViewModel.shared.views.append(Canvas())
+            ItemsViewModel.shared.currentImageIndex = ItemsViewModel.shared.imageDatas.count - 1
+            openEditViewController(at: ItemsViewModel.shared.images.count)
             collectionView.reloadData()
-            openEditViewController(at: indexPath.item + ItemsViewModel.shared.images.count)
         } else {
+            ItemsViewModel.shared.currentImageIndex = indexPath.item - 1
             openEditViewController(at: indexPath.item)
         }
     }

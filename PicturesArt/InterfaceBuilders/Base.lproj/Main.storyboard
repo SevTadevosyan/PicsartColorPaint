@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -95,10 +94,9 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xUQ-VZ-DoF">
-                                                <rect key="frame" x="62.333333333333343" y="239.99999999999994" width="200.00000000000003" height="50"/>
+                                                <rect key="frame" x="50" y="239.99999999999994" width="225" height="50"/>
                                                 <color key="backgroundColor" systemColor="systemPinkColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="200" id="IDQ-hy-OHb"/>
                                                     <constraint firstAttribute="height" constant="50" id="Uma-CM-azq"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -116,6 +114,7 @@
                                             </button>
                                         </subviews>
                                         <constraints>
+                                            <constraint firstItem="xUQ-VZ-DoF" firstAttribute="width" secondItem="GZC-QI-6Il" secondAttribute="width" id="Bah-sp-jXG"/>
                                             <constraint firstAttribute="trailing" secondItem="GZC-QI-6Il" secondAttribute="trailing" constant="50" id="dle-yu-wla"/>
                                             <constraint firstItem="GZC-QI-6Il" firstAttribute="leading" secondItem="lkc-vu-WaT" secondAttribute="leading" constant="50" id="lxC-eI-Ewg"/>
                                         </constraints>
@@ -467,16 +466,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d5i-FN-eBo" customClass="Canvas" customModule="PicturesArt" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="115" width="390" height="624"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <gestureRecognizers/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qPG-h5-6H2">
+                                <rect key="frame" x="75" y="358" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZPr-Tg-3Hb">
+                                <rect key="frame" x="0.0" y="114" width="390" height="626"/>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="aIN-lO-M6m" appends="YES" id="pU3-pj-4QA"/>
-                                    <outletCollection property="gestureRecognizers" destination="cVT-WB-aOG" appends="YES" id="xyn-xo-fJf"/>
-                                    <outletCollection property="gestureRecognizers" destination="7aj-nH-L0j" appends="YES" id="Uzp-Sr-rBc"/>
+                                    <outletCollection property="gestureRecognizers" destination="aIN-lO-M6m" appends="YES" id="ivj-zX-WC6"/>
+                                    <outletCollection property="gestureRecognizers" destination="cVT-WB-aOG" appends="YES" id="AL3-Kc-QYu"/>
                                 </connections>
-                            </view>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ww9-QM-hM3">
                                 <rect key="frame" x="0.0" y="44" width="390" height="70"/>
                                 <subviews>
@@ -634,6 +634,7 @@
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qFu-kI-Vd8">
                                                                 <rect key="frame" x="350" y="19.666666666666629" width="60" height="31"/>
+                                                                <gestureRecognizers/>
                                                                 <color key="tintColor" systemColor="labelColor"/>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                 <state key="normal" title=" " image="line.diagonal" catalog="system">
@@ -643,7 +644,8 @@
                                                                     <color key="baseForegroundColor" systemColor="labelColor"/>
                                                                 </buttonConfiguration>
                                                                 <connections>
-                                                                    <action selector="drawGradient:" destination="cLj-bP-r61" eventType="touchUpInside" id="aQI-6B-iBJ"/>
+                                                                    <action selector="useDirectLine:" destination="cLj-bP-r61" eventType="touchUpInside" id="Lk4-5i-CG9"/>
+                                                                    <outletCollection property="gestureRecognizers" destination="Asm-lO-ayT" appends="YES" id="Bat-3p-qOt"/>
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VNX-lo-1Fc">
@@ -704,29 +706,49 @@
                                     <constraint firstAttribute="bottom" secondItem="wbJ-64-ztL" secondAttribute="bottom" id="oli-9r-ZnQ"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="41b-so-xXH">
+                                <rect key="frame" x="0.0" y="44" width="390" height="766"/>
+                                <subviews>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="dbU-Rc-4i5">
+                                        <rect key="frame" x="176.66666666666666" y="364.66666666666669" width="37" height="37"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.12396364795918367" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstItem="dbU-Rc-4i5" firstAttribute="centerX" secondItem="41b-so-xXH" secondAttribute="centerX" id="BlB-OS-Q0d"/>
+                                    <constraint firstItem="dbU-Rc-4i5" firstAttribute="centerY" secondItem="41b-so-xXH" secondAttribute="centerY" id="dcF-tT-AEX"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="D79-Fa-4bD"/>
                         <color key="backgroundColor" systemColor="systemGray6Color"/>
                         <constraints>
-                            <constraint firstItem="hZH-fK-mEw" firstAttribute="top" secondItem="d5i-FN-eBo" secondAttribute="bottom" constant="1" id="4bj-o7-g2y"/>
-                            <constraint firstItem="D79-Fa-4bD" firstAttribute="trailing" secondItem="d5i-FN-eBo" secondAttribute="trailing" id="6EZ-fL-qWR"/>
                             <constraint firstItem="D79-Fa-4bD" firstAttribute="bottom" secondItem="hZH-fK-mEw" secondAttribute="bottom" id="7ht-gq-8xH"/>
+                            <constraint firstItem="ZPr-Tg-3Hb" firstAttribute="leading" secondItem="D79-Fa-4bD" secondAttribute="leading" id="CcU-aa-6OC"/>
+                            <constraint firstItem="D79-Fa-4bD" firstAttribute="trailing" secondItem="ZPr-Tg-3Hb" secondAttribute="trailing" id="Hik-Fd-YdE"/>
                             <constraint firstItem="ww9-QM-hM3" firstAttribute="leading" secondItem="D79-Fa-4bD" secondAttribute="leading" id="IsG-kz-hEA"/>
                             <constraint firstItem="hZH-fK-mEw" firstAttribute="trailing" secondItem="D79-Fa-4bD" secondAttribute="trailing" id="M3H-h3-3oh"/>
                             <constraint firstItem="ww9-QM-hM3" firstAttribute="top" secondItem="D79-Fa-4bD" secondAttribute="top" id="Omc-Y8-Bf8"/>
-                            <constraint firstItem="d5i-FN-eBo" firstAttribute="top" secondItem="ww9-QM-hM3" secondAttribute="bottom" constant="1" id="SN4-ST-L5x"/>
+                            <constraint firstItem="hZH-fK-mEw" firstAttribute="top" secondItem="ZPr-Tg-3Hb" secondAttribute="bottom" id="Y3h-sE-WMV"/>
+                            <constraint firstItem="41b-so-xXH" firstAttribute="leading" secondItem="ZPr-Tg-3Hb" secondAttribute="leading" id="aX9-W7-5Pp"/>
+                            <constraint firstItem="ZPr-Tg-3Hb" firstAttribute="top" secondItem="ww9-QM-hM3" secondAttribute="bottom" id="ahA-Ny-m3V"/>
                             <constraint firstItem="hZH-fK-mEw" firstAttribute="leading" secondItem="D79-Fa-4bD" secondAttribute="leading" id="cef-ZQ-XzH"/>
+                            <constraint firstItem="41b-so-xXH" firstAttribute="top" secondItem="D79-Fa-4bD" secondAttribute="top" id="h4i-4H-8Ll"/>
                             <constraint firstItem="D79-Fa-4bD" firstAttribute="trailing" secondItem="ww9-QM-hM3" secondAttribute="trailing" id="jTR-mb-yHd"/>
-                            <constraint firstItem="d5i-FN-eBo" firstAttribute="leading" secondItem="D79-Fa-4bD" secondAttribute="leading" id="pYa-2b-6ni"/>
+                            <constraint firstItem="41b-so-xXH" firstAttribute="trailing" secondItem="ZPr-Tg-3Hb" secondAttribute="trailing" id="lM6-v7-dwM"/>
+                            <constraint firstItem="41b-so-xXH" firstAttribute="bottom" secondItem="D79-Fa-4bD" secondAttribute="bottom" id="sNz-Hl-F8r"/>
                         </constraints>
                     </view>
                     <size key="freeformSize" width="390" height="844"/>
                     <connections>
-                        <outlet property="canvasView" destination="d5i-FN-eBo" id="Thf-Q3-Jfv"/>
+                        <outlet property="activityIndicator" destination="dbU-Rc-4i5" id="qzx-ao-62c"/>
+                        <outlet property="canvasView" destination="ZPr-Tg-3Hb" id="g5D-Vx-vFk"/>
                         <outlet property="eraserToolButton" destination="L2t-ew-9FP" id="Qr9-AD-ukL"/>
+                        <outlet property="importedImage" destination="qPG-h5-6H2" id="Hfw-iS-BM4"/>
                         <outlet property="lineToolButton" destination="qFu-kI-Vd8" id="MPB-d2-USf"/>
                         <outlet property="pencilToolButton" destination="BpA-0k-dW0" id="uq1-xW-3x2"/>
                         <outlet property="redoButton" destination="2gR-1Q-UXB" id="3Ir-et-My8"/>
+                        <outlet property="shadowView" destination="41b-so-xXH" id="RlE-DC-anT"/>
                         <outlet property="undoButton" destination="Ql3-I8-PLV" id="c1J-IU-9Ev"/>
                     </connections>
                 </viewController>
@@ -754,6 +776,11 @@
                 <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="ZFI-iD-YSc">
                     <connections>
                         <action selector="showSettings:" destination="cLj-bP-r61" id="cht-pL-ifD"/>
+                    </connections>
+                </pongPressGestureRecognizer>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="Asm-lO-ayT">
+                    <connections>
+                        <action selector="showSettings:" destination="cLj-bP-r61" id="b2D-qg-w5h"/>
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>

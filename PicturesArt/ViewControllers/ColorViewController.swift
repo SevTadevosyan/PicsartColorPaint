@@ -38,7 +38,6 @@ extension ColorViewController: UICollectionViewDataSource {
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        PenConfiguration.shared.color = colorModel.colors[indexPath.item].cgColor
         PenConfiguration.shared.penColor = colorModel.colors[indexPath.item].cgColor
         self.dismiss(animated: true)
     }

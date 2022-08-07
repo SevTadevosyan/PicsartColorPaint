@@ -15,7 +15,7 @@ class LaunchViewController: UIViewController {
     }
 
     @IBAction func showItemsViewController(_ sender: UIButton) {
-        self.show("ItemsViewController", transitionStyle: .crossDissolve, presentationStyle: .fullScreen)
+        self.show(name: "ItemsViewController", transitionStyle: .crossDissolve, presentationStyle: .fullScreen)
     }
 }
 
