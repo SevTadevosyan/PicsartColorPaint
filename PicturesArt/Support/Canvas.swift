@@ -10,10 +10,10 @@ import UIKit
 extension EditViewController {
     
     func draw() {
-        let size = canvasView.frame.size
+        let size = canvasImageView.bounds.size
         UIGraphicsBeginImageContext(size)
         guard let context = UIGraphicsGetCurrentContext() else { return }
-        img.draw(at: .zero)
+        img.draw(in: canvasImageView.bounds)
         context.setLineCap(.round)
         context.setLineJoin(.round)
         lines.forEach { line in
@@ -34,8 +34,7 @@ extension EditViewController {
                 context.strokeLineSegments(between: [first, last])
             }
         }
-        
-        canvasView.image = UIGraphicsGetImageFromCurrentImageContext()
+        canvasImageView.image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
     }
     
@@ -43,35 +42,38 @@ extension EditViewController {
         guard let undoLine = lines.popLast() else { return }
         redoLines.append(undoLine)
         draw()
-        canvasView.setNeedsDisplay()
+        canvasImageView.setNeedsDisplay()
     }
     
     func redo() {
         guard let last = redoLines.popLast() else { return }
         lines.append(last)
         draw()
-        canvasView.setNeedsDisplay()
+        canvasImageView.setNeedsDisplay()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if canvasView.image != nil {
-            img = canvasView.image!
+        guard let touchsLocation = touches.first?.location(in: self.canvasImageView).y else { return }
+        if touchsLocation >= canvasImageView.bounds.origin.y {
+            if canvasImageView.image != nil && lines.count == 0 {
+                img = canvasImageView.image!
+            }
+            var line = Line()
+            if !eraserToolButton.isSelected {
+                line.color = PenConfiguration.shared.penColor
+            }
+            lines.append(line)
+            configureUndoRedoButtonStates()
         }
-        undoButton.isEnabled = true
-        var line = Line()
-        if !eraserToolButton.isSelected {
-            line.color = PenConfiguration.shared.penColor
-        }
-        lines.append(line)
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let point = touches.first?.location(in: self.canvasView) else { return }
+        guard let point = touches.first?.location(in: self.canvasImageView) else { return }
         guard var lastLine = lines.popLast() else { return }
         lastLine.points.append(point)
         lines.append(lastLine)
         redoLines.removeAll()
         draw()
-        canvasView.setNeedsDisplay()
+        canvasImageView.setNeedsDisplay()
     }
 }

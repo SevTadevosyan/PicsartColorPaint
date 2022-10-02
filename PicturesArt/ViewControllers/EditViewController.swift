@@ -9,7 +9,7 @@ import UIKit
 
 class EditViewController: UIViewController {
     
-    @IBOutlet weak var canvasView: UIImageView!
+    @IBOutlet weak var canvasImageView: UIImageView!
     @IBOutlet weak var pencilToolButton: UIButton!
     @IBOutlet weak var eraserToolButton: UIButton!
     @IBOutlet weak var lineToolButton: UIButton!
@@ -18,6 +18,8 @@ class EditViewController: UIViewController {
     @IBOutlet weak var importedImage: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var shadowView: UIView!
+    @IBOutlet weak var importedImageCheckBarView: UIView!
+    @IBOutlet weak var importedImageBackgroundView: UIView!
     
     var lines = [Line]()
     var redoLines = [Line]()
@@ -25,11 +27,15 @@ class EditViewController: UIViewController {
     var timer: Timer?
     var index: Int?
     var img = UIImage()
+    var importedImg = UIImage()
+    var isImported = false
+    let vc = UIImagePickerController()
+
     var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        draw()
         configure()
     }
     
@@ -48,26 +54,17 @@ class EditViewController: UIViewController {
     }
     
     
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        if let imageData = canvasView.image?.pngData() {
-            ItemsViewModel.shared.imageDatas[ItemsViewModel.shared.currentImageIndex].image = imageData
-            do {
-                try CoreDataHelper.shared.context.save()
-            } catch {
-                
-            }
+        ItemsViewModel.shared.imageDatas[ItemsViewModel.shared.currentImageIndex].image = canvasImageView.image?.pngData() ?? UIImage().pngData()
+        do {
+            try CoreDataHelper.shared.context.save()
+        } catch {
+            print(error.localizedDescription)
         }
         PenConfiguration.shared.type = .pen
-        if canvasView.image != nil {
-            ItemsViewModel.shared.images[ItemsViewModel.shared.images.count - 1] = canvasView.image!
-        }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
+        ItemsViewModel.shared.images[ItemsViewModel.shared.images.count - 1] = canvasImageView.image!
     }
     
     @objc func stopIndicatorAnimation() {
@@ -77,8 +74,8 @@ class EditViewController: UIViewController {
     }
     
     func configure() {
-        canvasView.gestureRecognizers![0].delegate = self
-        canvasView.backgroundColor = .white
+        canvasImageView.gestureRecognizers![0].delegate = self
+        canvasImageView.backgroundColor = .white
         pencilToolButton.isSelected = true
         buttons.append(pencilToolButton)
         buttons.append(eraserToolButton)
@@ -109,8 +106,8 @@ class EditViewController: UIViewController {
     }
     
     @IBAction func exit(_ sender: UIButton) {
-        self.dismiss(animated: true)
         
+        self.dismiss(animated: true)
     }
     
     @IBAction func undoChange(_ sender: UIButton) {
@@ -125,7 +122,6 @@ class EditViewController: UIViewController {
     }
     
     @IBAction func addImage(_ sender: UIButton) {
-        let vc = UIImagePickerController()
         vc.delegate = self
         vc.allowsEditing = true
         present(vc, animated: true)
@@ -137,9 +133,10 @@ class EditViewController: UIViewController {
         vc.modalTransitionStyle = .coverVertical
         self.present(vc, animated: true) {
             DispatchQueue.main.async {
-                vc.imageView.image = self.canvasView.image!
+                vc.imageView.image = self.canvasImageView.image!
             }
         }
+        
     }
     
     @IBAction func chooseColor(_ sender: UIButton) {
@@ -173,18 +170,47 @@ class EditViewController: UIViewController {
     }
     
     @IBAction func zoomEditingView(_ sender: UIPinchGestureRecognizer) {
-        canvasView.transform = canvasView.transform.scaledBy(x: sender.scale,
+        canvasImageView.transform = canvasImageView.transform.scaledBy(x: sender.scale,
                                                              y: sender.scale)
         sender.scale = 1
     }
     
     @IBAction func rotateEditingView(_ sender: UIRotationGestureRecognizer) {
-        canvasView.transform = canvasView.transform.rotated(by: sender.rotation)
+        canvasImageView.transform = canvasImageView.transform.rotated(by: sender.rotation)
         sender.rotation = 0
     }
     
     @IBAction func changePosition(_ sender: UIPanGestureRecognizer) {
         
+    }
+    
+    @IBAction func changeImportedImagePosition(_ sender: UIPanGestureRecognizer) {
+        let translation = sender.translation(in: view)
+
+        importedImageBackgroundView.center = CGPoint(x: importedImageBackgroundView.center.x + translation.x,
+                                                     y: importedImageBackgroundView.center.y + translation.y)
+        sender.setTranslation(CGPoint.zero, in: view)
+    }
+    
+    @IBAction func increaseUp(_ sender: UIButton) {
+        importedImageBackgroundView.transform = importedImageBackgroundView.transform.scaledBy(x: 2, y: 2)
+        canvasImageView.setNeedsDisplay()
+    }
+    
+    @IBAction func setNewImage(_ sender: UIButton) {
+        let size = canvasImageView.frame.size
+        UIGraphicsBeginImageContext(size)
+        importedImg.draw(at: importedImage.frame.origin, blendMode: .normal, alpha: 1.0)
+        canvasImageView.image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        importedImageBackgroundView.isHidden = true
+        importedImageCheckBarView.isHidden = true
+    }
+    
+    @IBAction func resetNewImage(_ sender: UIButton) {
+        importedImage.image = UIImage()
+        importedImageBackgroundView.isHidden = true
+        importedImageCheckBarView.isHidden = true
     }
 }
 
@@ -196,9 +222,13 @@ extension EditViewController: UIGestureRecognizerDelegate {
 
 extension EditViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
-            importedImage.image = image
-        }
+        guard let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage else { return }
+        importedImage.image = image
+        importedImg = importedImage.image!
+        importedImage.isHidden = false
+        importedImageCheckBarView.isHidden = false
+        isImported = true
+        importedImageBackgroundView.isHidden = false
         picker.dismiss(animated: true, completion: nil)
     }
     
@@ -206,3 +236,5 @@ extension EditViewController: UIImagePickerControllerDelegate, UINavigationContr
         picker.dismiss(animated: true, completion: nil)
     }
 }
+
+

@@ -23,6 +23,24 @@
                         <rect key="frame" x="15" y="0.0" width="158" height="285"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </imageView>
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qCA-2r-rma">
+                        <rect key="frame" x="0.0" y="0.0" width="188" height="285"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="0dm-sZ-OSt">
+                                <rect key="frame" x="79" y="129.5" width="30" height="26.5"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="6Gi-nK-Cwm"/>
+                                    <constraint firstAttribute="width" constant="30" id="iAF-DI-rWk"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="0dm-sZ-OSt" firstAttribute="centerY" secondItem="qCA-2r-rma" secondAttribute="centerY" id="L9k-OW-7Ng"/>
+                            <constraint firstItem="0dm-sZ-OSt" firstAttribute="centerX" secondItem="qCA-2r-rma" secondAttribute="centerX" id="bBm-tn-hQg"/>
+                        </constraints>
+                    </view>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
@@ -31,7 +49,11 @@
                 <constraint firstItem="Rb9-N3-ouo" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="2n2-GQ-sdv"/>
                 <constraint firstItem="Rb9-N3-ouo" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="6ld-gc-X7L"/>
                 <constraint firstItem="wmm-AO-f4k" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="15" id="Aid-O9-caw"/>
+                <constraint firstAttribute="bottom" secondItem="qCA-2r-rma" secondAttribute="bottom" id="HpT-GW-iTk"/>
+                <constraint firstItem="qCA-2r-rma" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="V30-T3-zIT"/>
+                <constraint firstAttribute="trailing" secondItem="qCA-2r-rma" secondAttribute="trailing" id="ZVe-aV-h4A"/>
                 <constraint firstAttribute="trailing" secondItem="Rb9-N3-ouo" secondAttribute="trailing" id="fih-js-rIy"/>
+                <constraint firstItem="qCA-2r-rma" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="qha-B4-Qsa"/>
                 <constraint firstAttribute="bottom" secondItem="Rb9-N3-ouo" secondAttribute="bottom" id="wBh-0X-YK5"/>
                 <constraint firstAttribute="bottom" secondItem="wmm-AO-f4k" secondAttribute="bottom" id="wUA-2V-Q9X"/>
                 <constraint firstItem="wmm-AO-f4k" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="x51-Gr-jAv"/>
@@ -44,6 +66,7 @@
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
             <connections>
+                <outlet property="blurView" destination="qCA-2r-rma" id="Hdc-gz-BE4"/>
                 <outlet property="imageView" destination="wmm-AO-f4k" id="wPD-cc-FwZ"/>
             </connections>
             <point key="canvasLocation" x="237.68115942028987" y="99.441964285714278"/>
@@ -51,5 +74,6 @@
     </objects>
     <resources>
         <image name="background" width="997" height="993"/>
+        <image name="checkmark" catalog="system" width="128" height="114"/>
     </resources>
 </document>

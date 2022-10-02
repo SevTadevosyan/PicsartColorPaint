@@ -11,6 +11,7 @@ import CoreData
 
 class CoreDataHelper {
     static let shared = CoreDataHelper()
+    private init() {}
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     func saveImage(data: Data) {

@@ -8,10 +8,8 @@
 import UIKit
 
 class ItemsViewModel {
-    
     static let shared = ItemsViewModel()
     private init() {}
-    
     var images: [UIImage] = []
     var imageDatas: [Image] = []
     var currentImageIndex = 0
@@ -20,7 +18,9 @@ class ItemsViewModel {
         images = []
         for i in 0..<imageDatas.count {
             images.append(UIImage())
-            images[i] = UIImage(data: imageDatas[i].image!)!
+            if imageDatas[i].image != nil {
+                images[i] = UIImage(data: imageDatas[i].image!)!
+            }
         }
     }
 }

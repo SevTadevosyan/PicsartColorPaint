@@ -33,8 +33,24 @@ extension UIViewController {
         self.present(drawingViewController, animated: true) {
             drawingViewController.index = index
             PenConfiguration.shared.color = PenConfiguration.shared.penColor
-            drawingViewController.canvasView.image = ItemsViewModel.shared.images[index - 1]
-//            drawingViewController.img = ItemsViewModel.shared.images[index - 1]
+            drawingViewController.canvasImageView.image = ItemsViewModel.shared.images[index - 1]
         }
     }
+}
+
+extension UIImage {
+    func resizeImage(targetSize: CGSize) -> UIImage {
+        let size = self.size
+        let widthRatio  = targetSize.width  / size.width
+        let heightRatio = targetSize.height / size.height
+        let newSize = widthRatio > heightRatio ?  CGSize(width: size.width * heightRatio, height: size.height * heightRatio) : CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        self.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return newImage!
+      }
 }

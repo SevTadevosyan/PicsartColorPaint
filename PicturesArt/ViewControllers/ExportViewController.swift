@@ -22,23 +22,25 @@ class ExportViewController: UIViewController {
         return path.first
     }
     
-    func saveJpg(_ image: UIImage) {
-        
-        if let jpgData = image.jpegData(compressionQuality: 1.0),
-            let path = documentDirectoryPath()?.appendingPathComponent("exampleJpg.jpg") {
-            try? jpgData.write(to: path)
-        }
-    }
+//    func saveJpg(_ image: UIImage) {
+//
+//        if let pngData = image.pngData(),
+//           let path = documentDirectoryPath()?.appendingPathComponent("exampleJpg.jpg") {
+//            print(pngData)
+//            let p = pngData.wr
+//            try? pngData.write(to: path)
+//        }
+//    }
+    
     @IBAction func exportImageIntoGallery(_ sender: UIButton) {
-        let imageData = self.imageView.image!.pngData()
-        guard let compresedImage = UIImage(data: imageData!) else { return }
+        
+        let img = imageView.image?.resizeImage(targetSize: CGSize(width: 1080, height: 2126)).pngData()
+        guard let compresedImage = UIImage(data: img!) else { return }
         UIImageWriteToSavedPhotosAlbum(compresedImage, self, #selector(image(path:didFinishSavingWithError:contextInfo:)), nil)
     }
     @objc private func image(path: String, didFinishSavingWithError error: NSError?, contextInfo: UnsafeMutableRawPointer?) {
         if ((error) != nil) {
             print("something went wrong!")
-        } else {
-            print("Done!")
         }
     }
     
@@ -46,6 +48,7 @@ class ExportViewController: UIViewController {
         if let url = URL(string: "https://apps.apple.com/us/app/picsart-photo-video-editor/id587366035") {
             UIApplication.shared.open(url)
         }
+        
     }
     
     @IBAction func selfDismiss(_ sender: UIButton) {
